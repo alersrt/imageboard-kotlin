@@ -26,6 +26,7 @@ kotlin {
             }
         }
     }
+
     sourceSets {
         val nativeMain by getting {
             kotlin.srcDir("src/main/kotlin")
@@ -34,6 +35,11 @@ kotlin {
         val nativeTest by getting {
             kotlin.srcDir("src/test/kotlin")
             resources.srcDir("src/test/resources")
+
+            dependencies {
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+            }
         }
     }
 }
