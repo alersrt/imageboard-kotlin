@@ -31,6 +31,10 @@ kotlin {
         val nativeMain by getting {
             kotlin.srcDir("src/main/kotlin")
             resources.srcDir("src/main/resources")
+
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+            }
         }
         val nativeTest by getting {
             kotlin.srcDir("src/test/kotlin")
