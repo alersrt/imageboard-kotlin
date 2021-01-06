@@ -1,3 +1,4 @@
+import kotlin.test.Ignore
 import kotlin.test.Test
 
 class MainTest {
@@ -7,6 +8,7 @@ class MainTest {
         assert(true)
     }
 
+    @Ignore
     @Test
     fun fail() {
         assert(false)

@@ -1,49 +1,40 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    kotlin("multiplatform") version "1.4.21"
+    kotlin("jvm") version "1.4.21"
+    application
 }
 
 group = "me.archie"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    jcenter()
     mavenCentral()
+    maven { url = uri("https://dl.bintray.com/kotlin/kotlinx") }
+    maven { url = uri("https://dl.bintray.com/kotlin/ktor") }
 }
 
-kotlin {
-    val hostOs = System.getProperty("os.name")
-    val isMingwX64 = hostOs.startsWith("Windows")
-    val nativeTarget = when {
-        hostOs == "Mac OS X" -> macosX64("native")
-        hostOs == "Linux" -> linuxX64("native")
-        isMingwX64 -> mingwX64("native")
-        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
-    }
+dependencies {
+    implementation("io.ktor:ktor-server-netty:1.5.0")
+    implementation("io.ktor:ktor-html-builder:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
 
-    nativeTarget.apply {
-        binaries {
-            executable {
-                entryPoint = "main"
-            }
-        }
-    }
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    testImplementation(kotlin("test-common"))
+    testImplementation(kotlin("test-annotations-common"))
+    testImplementation(kotlin("test-junit5"))
+}
 
-    sourceSets {
-        val nativeMain by getting {
-            kotlin.srcDir("src/main/kotlin")
-            resources.srcDir("src/main/resources")
+tasks.test {
+    useJUnitPlatform()
+}
 
-            dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
-            }
-        }
-        val nativeTest by getting {
-            kotlin.srcDir("src/test/kotlin")
-            resources.srcDir("src/test/resources")
+tasks.withType<KotlinCompile>() {
+    kotlinOptions.jvmTarget = "13"
+}
 
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
-    }
+application {
+    mainClass.set("MainKt")
 }
