@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 class RootController {
 
     @GetMapping
-    fun getRoot(): ResponseEntity<RootResponse> = ResponseEntity.ok(RootResponse(""))
+    fun getRoot(): ResponseEntity<RootResponse> = ResponseEntity.ok(RootResponse(text = null))
 
-    data class RootResponse(var text: String? = "DEFAULT")
+    data class RootResponse(var text: String?)
 }
