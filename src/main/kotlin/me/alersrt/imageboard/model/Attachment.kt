@@ -28,7 +28,7 @@ class Attachment(
     var blob: ByteArray,
 
     @LazyCollection(LazyCollectionOption.EXTRA)
-    @ManyToMany(mappedBy = "attachments") val messages: MutableSet<Message> = mutableSetOf(),
+    @ManyToMany(mappedBy = "attachments") var messages: MutableSet<Message> = mutableSetOf(),
 ) : BaseEntity<Long>()
 
 fun fromMultipartFile(multipartFile: MultipartFile): Attachment = Attachment(

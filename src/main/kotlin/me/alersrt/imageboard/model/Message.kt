@@ -12,16 +12,16 @@ import javax.validation.constraints.Size
 
 @Entity
 class Message(
-        @Size(max = 100) var title: String? = null,
+    @Size(max = 100) var title: String? = null,
 
-        @Size(max = 1024) var text: String? = null,
+    @Size(max = 1024) var text: String? = null,
 
-        @CreationTimestamp var timestamp: LocalDateTime? = LocalDateTime.now(),
+    @CreationTimestamp var timestamp: LocalDateTime? = LocalDateTime.now(),
 
-        @LazyCollection(LazyCollectionOption.EXTRA)
-        @ManyToMany @JoinTable(
-                name = "message_attachment",
-                joinColumns = [JoinColumn(name = "message_id")],
-                inverseJoinColumns = [JoinColumn(name = "attachment_id")]
-        ) val attachments: MutableSet<Attachment> = mutableSetOf()
+    @LazyCollection(LazyCollectionOption.EXTRA)
+    @ManyToMany @JoinTable(
+        name = "message_attachment",
+        joinColumns = [JoinColumn(name = "message_id")],
+        inverseJoinColumns = [JoinColumn(name = "attachment_id")]
+    ) var attachments: MutableSet<Attachment> = mutableSetOf()
 ) : BaseEntity<Long>()
