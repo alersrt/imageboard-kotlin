@@ -11,7 +11,7 @@ import javax.persistence.ManyToMany
 import javax.validation.constraints.Size
 
 @Entity
-open class Message(
+class Message(
         @Size(max = 100) var title: String? = null,
 
         @Size(max = 1024) var text: String? = null,
